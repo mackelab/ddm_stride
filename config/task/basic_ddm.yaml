@@ -1,0 +1,45 @@
+
+# Specifies the number of different parameter configurations that will be sampled 
+# and used for simulating the training and test data.
+presim_training_data_path:      # e.g. ${result_folder}/simulation_data
+sim_training_data_params: 
+  num_simulations: 0            # recommended: 75000
+  simulation_batch_size: 100
+  num_workers: 5
+
+presim_test_data_path:
+sim_test_data_params:
+  num_simulations: 0            # recommended: 2000
+  simulation_batch_size: 100
+  num_workers: 5
+
+# The i.i.d. test data will be used for comparing the simulation results to flow samples.
+# num_params specifies the number of parameter configurations used for diagnose plots. 
+presim_iid_test_data_path:
+sim_iid_test_data_params:
+  num_params: 0                 # recommended: 20
+  simulation_batch_size: 100
+  num_workers: 5
+  
+# Path to pre-trained model 
+model_path: 
+
+posterior: 'mcmc'
+posterior_params: 
+  method: 'slice_np'
+  thin: 5
+  # Warmup steps use thinning if slice_np_vectorized and are performed for each chain!
+  warmup_steps: 100   
+  max_width: 20
+  num_chains: 5
+  init_strategy: 'proposal'
+  init_strategy_num_candidates: 25
+  num_workers: 10
+
+n_sbc_runs: 300
+n_local_coverage_plots: 15
+
+# Data path relative to data folder
+experimental_data_path: 
+# Group result plots by experimental conditions
+group_by:

@@ -1,0 +1,45 @@
+
+# Choose the number of sweep configurations and the search space of the hyperparameters.
+n_wandb_sweeps: 25
+wandb:
+  method: random
+  parameters:
+    validation_fraction: 
+      value: 0.2
+    stop_after_epochs:
+      value: 20
+    training_batch_size: 
+      values: [32, 64, 128, 256]
+    learning_rate: 
+      distribution: uniform
+      min: 1e-4
+      max: 1e-2
+    hidden_features: 
+      values: [25, 50, 60]
+    num_transforms: 
+      values: [2, 3, 5]
+    hidden_layers: 
+      values: [2, 3, 4]
+  metric:
+    name: validation_log_prob
+    goal: maximize
+
+# Additional training parameters
+train_params:
+  clip_max_norm: 5.0
+  exclude_invalid_x: True
+  resume_training: False
+  discard_prior_samples: False
+  retrain_from_scratch: False
+  show_train_summary: True
+  dataloader_kwargs: 
+  max_num_epochs:
+
+# Additional hyperparameters of the density estimator
+model_hyperparams:
+  model: mnle
+  z_score_theta: "independent"
+  z_score_x: "independent"
+  num_bins: 10
+  log_transform_x: True
+  tail_bound: 10.0

@@ -1,0 +1,29 @@
+
+
+
+# Organize runs by naming them: The result_folder is used for storing 
+# the results and configuration of your experiment.
+result_folder: example_${now:%Y-%m-%d}
+
+hydra:
+  run:
+    dir: results/${result_folder} 
+
+# Specify which stages you want to run.
+run_simulate: False
+run_train: False
+run_diagnose_fast: False
+run_diagnose_slow: False
+run_evaluate: False
+
+# Specify which configuration files to use from each configuration folder.
+defaults:
+- _self_
+- ddm_model: example_file
+- task: example_file
+- algorithm: mnle
+
+
+
+
+
