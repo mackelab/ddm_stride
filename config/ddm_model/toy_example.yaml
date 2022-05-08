@@ -1,0 +1,29 @@
+# Name of model class that will be used for generating data.
+# The parameters parameter_names and simulator_results will be set automatically.
+simulator: 
+  _target_: ddm_stride.ddm_models.toy_simulator.MixedSimulator
+
+# The parameters theta specify how the different parameters theta used for simulating are called and
+# which distribution they are sampled from. 
+# Input values contain additional values pi used for simulating that no inference will be performed on. 
+# Observations x specify results of the simulator.
+# As a distribution one can choose any distribution from torch.distributions.
+parameters:
+- name: shape
+  distribution: 
+    _target_: torch.distributions.gamma.Gamma
+    concentration: 1
+    rate: 0.5
+- name: prob
+  distribution: 
+    _target_: torch.distributions.beta.Beta
+    concentration1 : 2
+    concentration0: 2
+
+experimental_conditions:
+
+observations:
+- name: choice
+  variable_type: discrete
+- name: rt
+  variable_type: continuous

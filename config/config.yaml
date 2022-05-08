@@ -19,8 +19,8 @@ run_evaluate: False
 # Specify which configuration files to use from each configuration folder.
 defaults:
 - _self_
-- ddm_model: example_file
-- task: example_file
+- ddm_model: example
+- task: example
 - algorithm: mnle
 
 

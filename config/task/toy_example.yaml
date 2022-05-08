@@ -3,13 +3,13 @@
 # and used for simulating the training and test data.
 presim_training_data_path:      # e.g. ${result_folder}/simulation_data
 sim_training_data_params: 
-  num_simulations: 50000            # recommended: 75000
+  num_simulations: 20000            # recommended: 75000
   simulation_batch_size: 100
   num_workers: 5
 
 presim_test_data_path:
 sim_test_data_params:
-  num_simulations: 2000            # recommended: 2000
+  num_simulations: 1000            # recommended: 2000
   simulation_batch_size: 100
   num_workers: 5
 
@@ -17,7 +17,7 @@ sim_test_data_params:
 # num_params specifies the number of parameter configurations used for diagnose plots. 
 presim_iid_test_data_path:
 sim_iid_test_data_params:
-  num_params: 20                 # recommended: 20
+  num_params: 10                 # recommended: 20
   simulation_batch_size: 100
   num_workers: 5
   
@@ -38,8 +38,3 @@ posterior_params:
 
 n_sbc_runs: 300
 n_local_coverage_plots: 15
-
-# Data path relative to data folder
-experimental_data_path: 'roitman_rts_data'
-# Group result plots by experimental conditions
-group_by:
