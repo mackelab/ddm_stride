@@ -19,12 +19,23 @@ DESCRIPTION = "Pipeline for applying simulation-based inference to Drift-Diffusi
 URL = "https://github.com/mackelab/ddm_stride"
 EMAIL = "ingeborg.wenger@student.uni-tuebingen.de"
 AUTHOR = "Ingeborg Wenger"
-REQUIRES_PYTHON = ">=3.9"  # TODO: lower possible?
+REQUIRES_PYTHON = ">=3.9"  # TODO: lower than 3.9 possible?
 VERSION = "0.1.0"
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-
+    'ddm_stride',
+    'sbi',
+    'hydra-core',
+    'ipykernel',
+    'jupyter',
+    'black',
+    'isort',
+    'pandas',
+    'matplotlib',
+    'seaborn',
+    'sdeint',
+    'wandb'
 ]
 
 # What packages are optional?
