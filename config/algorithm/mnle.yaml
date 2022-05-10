@@ -32,8 +32,8 @@ train_params:
   discard_prior_samples: False
   retrain_from_scratch: False
   show_train_summary: True
-  dataloader_kwargs: 
-  max_num_epochs:
+  # dataloader_kwargs: 
+  # max_num_epochs:
 
 # Additional hyperparameters of the density estimator
 model_hyperparams:
