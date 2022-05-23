@@ -25,7 +25,7 @@ See [tutorial 2](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tuto
 The **TRain** stage uttilizes the training data consisting of $\theta$, $\pi$ and $x$ to train a neural network called [Mixed Neural Likelihood Estimator](https://www.biorxiv.org/content/10.1101/2021.12.22.473472v2.abstract) (MNLE). The MNLE is trained to emulate the behaviour of the simulator, hereby learning a synthetic likelihood $q(x | \theta, \pi)$ that approximates the true likelihood $p(x | \theta, \pi)$.
 See [tutorial 3](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_3_train.ipynb) for a detailed explanation of how to train a MNLE.
 
-The **Infer** stage specifies the posterior method. Markov chain Monte Carlo (MCMC) methods allow to draw samples with a probability determined to the synthetic likelihood $q(x | \theta, \pi)$ and the prior $p(\theta)$. Since likelihood and prior are proportional to the posterior, i.e. $p(\theta | x, \pi) \propto q(x | \theta, \pi) \cdot p(\theta)$, the posterior samples over time approximate the posterior distribution.
+The **Infer** stage specifies the posterior method. [Markov chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) methods allow to draw samples $\Theta$ with a probability that depends on the synthetic likelihood $q(x | \theta, \pi)$ and the prior $p(\theta)$. Since likelihood and prior are proportional to the posterior, i.e. $p(\theta | x, \pi) \propto q(x | \theta, \pi) \cdot p(\theta)$, the samples over time approximate the posterior distribution.
 See [tutorial 4](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_4_infer.ipynb) for a detailed explanation of how to specify the posterior.
 
 The **Diagnose** stage verifies if the MNLE has been trained successfully, i.e. if it has learned the synthetic likelihood and can be leveraged by the posterior method in order to infer the posterior. Various diagnostics are computed and visualized. If the results of the **Diagnose** stage are unsatisfactory, stages 1-3 can be adapted to improve the posterior.
@@ -40,7 +40,7 @@ See [tutorial 6](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tuto
 The pipeline is managed via the configuration files found in the config folder. The files in `config/algorithm` specify the MNLE. `config/ddm_model` defines the Drift-Diffusion model that will be used as a simulator. The `config/task` files contain configurations of different pipeline runs, e.g. the number of simulations, the posterior specification or the name of the experimental dataset.  
 The results of each pipeline run are saved to the `results` folder. See the [first tutorial](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_1_config.ipynb) for a detailed explanation of config files.
 
-The quickstart tutorial shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. Blue boxes provide additional information for more advanced users and can be skipped. The tutorials are also made available in Google Colab (TODO: link).
+The quickstart tutorial (TODO link) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. Blue boxes provide additional information for more advanced users and can be skipped. The tutorials are also made available in Google Colab (TODO: link).
 
 # Installation
 
