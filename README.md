@@ -17,7 +17,7 @@ or via the tutorials.
 
 The five pipeline stages are run one after the other, as depicted in the following figure:  
 
-<img src="tutorials/tutorial_images/pipeline.png" width=1000px>
+<img src="tutorials/tutorial_images/pipeline.PNG" width=1000px>
 
 The **Simulate** stage implements a DDM as a simulator. This simulator is used to generate observations $x$ that are used as training and test data for the following stages. To generate one observation,  parameters $\theta$ and optionally experimental conditions $\pi$ must be passed to the simulator. Sensible values for $\theta$ and $\pi$ are drawn from a proposal distribution that is specified by the user. 
 See [tutorial 2](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_2_simulate.ipynb) for a detailed explanation of how to run the simulation step.
