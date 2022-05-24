@@ -32,8 +32,8 @@ posterior_params:
   warmup_steps: 100   
   max_width: 20
   num_chains: 5
-  init_strategy: 'proposal'
-  init_strategy_num_candidates: 25
+  init_strategy: 'sir'
+  init_strategy_num_candidates: 500
   num_workers: 10
 
 n_sbc_runs: 300

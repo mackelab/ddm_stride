@@ -3,7 +3,7 @@
 
 # Organize runs by naming them: The result_folder is used for storing 
 # the results and configuration of your experiment.
-result_folder: example_${now:%Y-%m-%d}
+result_folder: basic_ddm_22-05-24
 
 hydra:
   run:
@@ -19,9 +19,9 @@ run_evaluate: False
 # Specify which configuration files to use from each configuration folder.
 defaults:
 - _self_
-- ddm_model: example
-- task: example
-- algorithm: mnle
+- ddm_model: basic_ddm
+- task: basic_ddm
+- algorithm: basic_ddm
 
 
 
