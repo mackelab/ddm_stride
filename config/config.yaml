@@ -1,5 +1,10 @@
 
-
+# Specify which configuration files to use from each configuration folder.
+defaults:
+- _self_
+- ddm_model: basic_ddm
+- task: basic_ddm
+- algorithm: basic_ddm
 
 # Organize runs by naming them: The result_folder is used for storing 
 # the results and configuration of your experiment.
@@ -16,12 +21,6 @@ run_diagnose_fast: False
 run_diagnose_slow: False
 run_evaluate: False
 
-# Specify which configuration files to use from each configuration folder.
-defaults:
-- _self_
-- ddm_model: basic_ddm
-- task: basic_ddm
-- algorithm: basic_ddm
 
 
 
