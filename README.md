@@ -37,7 +37,7 @@ See [tutorial 6](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tuto
 
 [Tutorial 7](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_7_reuse_results.ipynb) shows how to reuse previously computed results, e.g. to use a trained MNLE to infer the posterior on multiple different experimental datasets.
 
-The pipeline is managed via the configuration files found in the config folder. The files in *config/algorithm* specify the MNLE. *config/ddm_model* defines the Drift-Diffusion model that will be used as a simulator. The *config/task* files contain configurations of different pipeline runs, e.g. the number of simulations, the posterior specification or the name of the experimental dataset.  
+The pipeline is managed via the configuration files found in the config folder and organized into three subfolders. The files in the subfolder *config/algorithm* specify the MNLE. *config/ddm_model* defines the Drift-Diffusion model that will be used as a simulator. The *config/task* files contain configurations of different pipeline runs, e.g. the number of simulations, the posterior specification or the name of the experimental dataset.  
 The results of each pipeline run are saved to the *results* folder. See the [first tutorial](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_1_config.ipynb) for a detailed explanation of config files.
 
 The quickstart tutorial (TODO link) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. Blue boxes provide additional information for more advanced users and can be skipped. The tutorials are also made available in Google Colab (TODO: link).
