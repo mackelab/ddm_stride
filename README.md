@@ -1,10 +1,12 @@
-# ddm_stride
+# DDM STRIDE
 
 DDM STRIDE implements a pipeline for applying simulation-based inference to Drift-Diffusion Models.
 
 Drift-Diffusion models (DDMs) are used in psychology and neuroscience for modelling the process of decision making in humans and animals. Interesting applications of DDMs include [capturing the effect of medication in ADHD patients](https://link.springer.com/article/10.3758/s13423-016-1199-y) or investigating the [relation between visual attention and choice](https://www.frontiersin.org/articles/10.3389/fpsyg.2012.00193/full). A simple DDM is visualized in the figure below. The model computes the progress of a decision variable over time towards one of two decision boundaries. When the decision variable crosses one of the boundaries, the corresponding choice is reported and the reaction time of making the choice can be observed. A DDM is parameterized by a number of parameters $\theta$, e.g. the height of the decision boundary.  
-Given experimental data containing the choices and reaction times of subjects, reasearchers aim at finding the DDM and the DDM parameters $\theta$ that are most likely to having generated the experimental data. Parameters can be found via [Bayesian Inference](https://en.wikipedia.org/wiki/Bayesian_inference). Here, a posterior $p(\theta | x)$ is computed that describes the probability of a parameter $\theta$ having generated the experimental data $x$. Additionally, experimental conditions $\pi$ like the task difficulty might influence the DDM, yielding a posterior distribution $p(\theta | x, \pi)$.  
-For simpler DDMs the posterior can be found by numerically solving the likelihood $p(x | \theta, \pi)$. However, the likelihood is intractable for more complex DDMs like the [leaky, competing accumulator model](https://psycnet.apa.org/record/2001-07628-003). DDM STRIDE provides a pipeline for solving complex DDMs based on simulations, cf. [simulation-based inference](https://www.pnas.org/doi/abs/10.1073/pnas.1912789117). TODO: explain sbi?
+
+Given experimental data containing the choices and reaction times of subjects, reasearchers aim at finding the DDM and the DDM parameters $\theta$ that are most likely to having generated the experimental data. Parameters can be found via [Bayesian Inference](https://en.wikipedia.org/wiki/Bayesian_inference). Here, a posterior $p(\theta | x)$ is computed that describes the probability of a parameter $\theta$ having generated the experimental data $x$. Additionally, experimental conditions $\pi$ like the task difficulty might influence the DDM, yielding a posterior distribution $p(\theta | x, \pi)$. The shape and variance of the posterior convey information regarding the sensitivity of a parameter and can help with defining a reasonable prior space. Furthermore, the variance of the posterior reflects on its uncertainty with an increased number of observations $x$ decreasing the posterior variance.  
+
+For simpler DDMs the posterior can be found by numerically solving the likelihood $p(x | \theta, \pi)$. However, the likelihood is intractable for more complex DDMs like the [leaky, competing accumulator model](https://psycnet.apa.org/record/2001-07628-003). DDM STRIDE provides a pipeline for solving complex DDMs based on simulations, cf. [simulation-based inference](https://www.pnas.org/doi/abs/10.1073/pnas.1912789117). 
 
 <img src="tutorials/tutorial_images/overview.PNG" width=1000px>
 
@@ -15,7 +17,11 @@ python ddm_stride/run.py
 ```
 or via the tutorials.    
 
-The five pipeline stages are run one after the other, as depicted in the following figure:  
+The quickstart tutorial (TODO link) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. They are also made available in Google Colab (TODO: link).  
+Blue boxes provide additional information for more advanced users and can be skipped. 
+
+</br>
+The five pipeline stages are run one after the other, as depicted in the following figure: </br>
 
 <img src="tutorials/tutorial_images/pipeline.PNG" width=1000px>
 
@@ -31,7 +37,7 @@ See [tutorial 4](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tuto
 The **Diagnose** stage verifies if the MNLE has been trained successfully, i.e. if it has learned the synthetic likelihood and can be leveraged by the posterior method in order to infer the posterior. Various diagnostics are computed and visualized. If the results of the **Diagnose** stage are unsatisfactory, stages 1-3 can be adapted to improve the posterior.
 See [tutorial 5](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_5_diagnose.ipynb) for a detailed explanation of how to run and interpret the diagnostics.
 
-The **Evaluate** stage finally infers the posterior of parameters $\theta$ on an experimental dataset. Posterior metrics like the median, maximum a posteriori estimate or variance are provided. Additionally, various plots are created allowing the user to investigate the behaviour of the posterior.
+The **Evaluate** stage finally infers the posterior of parameters $\theta$ on an experimental dataset. Posterior metrics like the median, maximum a posteriori estimate or variance are provided. Additionally, various plots are created allowing the user to investigate if the selected DDM is able to explain the experimental data.
 See [tutorial 6](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_6_evaluate.ipynb) for inferring the posterior distribution on an experimental dataset.
 
 
@@ -40,7 +46,6 @@ See [tutorial 6](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tuto
 The pipeline is managed via the configuration files found in the config folder and organized into three subfolders. The files in the subfolder *config/algorithm* specify the MNLE. *config/ddm_model* defines the Drift-Diffusion model that will be used as a simulator. The *config/task* files contain configurations of different pipeline runs, e.g. the number of simulations, the posterior specification or the name of the experimental dataset.  
 The results of each pipeline run are saved to the *results* folder. See the [first tutorial](https://github.com/mackelab/ddm_stride/blob/main/tutorials/tutorial_1_config.ipynb) for a detailed explanation of config files.
 
-The quickstart tutorial (TODO link) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. Blue boxes provide additional information for more advanced users and can be skipped. The tutorials are also made available in Google Colab (TODO: link).
 
 # Installation
 

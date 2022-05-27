@@ -24,6 +24,7 @@ sim_iid_test_data_params:
 # Path to pre-trained model 
 model_path: 
 
+# Posterior
 posterior: 'mcmc'
 posterior_params: 
   method: 'slice_np'
@@ -36,6 +37,12 @@ posterior_params:
   init_strategy_num_candidates: 25
   num_workers: 10
 
+# MAP
+num_iter: 1000
+num_to_optimize: 100 
+num_init_samples: 1000
+
+# Slow diagnosis
 n_sbc_runs: 300
 n_local_coverage_plots: 15
 
