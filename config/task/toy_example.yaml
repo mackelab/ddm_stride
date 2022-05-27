@@ -41,7 +41,16 @@ posterior_params:
 num_iter: 1000
 num_to_optimize: 100 
 num_init_samples: 1000
+init_method: 'proposal'
 
 # Slow diagnosis
 n_sbc_runs: 300
 n_local_coverage_plots: 15
+
+# Posterior samples inferred from the experimental data
+n_posterior_samples: 2000
+
+# Data path relative to data folder
+experimental_data_path: 
+# Group result plots by experimental conditions
+group_by:
