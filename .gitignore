@@ -1,6 +1,6 @@
-*/sbi-logs/
+/results/*/sbi-logs/
+/results/*/wandb/
 /ddm_stride
-
 .vscode
 
 # https://github.com/github/gitignore/blob/main/Python.gitignore:

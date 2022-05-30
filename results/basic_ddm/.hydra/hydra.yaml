@@ -1,6 +1,6 @@
 hydra:
   run:
-    dir: results/${result_folder}
+    dir: ../results/${result_folder}
   sweep:
     dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
     subdir: ${hydra.job.num}
@@ -107,11 +107,13 @@ hydra:
   callbacks: {}
   output_subdir: .hydra
   overrides:
-    hydra: []
-    task: []
+    hydra:
+    - hydra.run.dir=../results/${result_folder}
+    task:
+    - run_simulate=True
   job:
     name: run
-    override_dirname: ''
+    override_dirname: run_simulate=True
     id: ???
     num: ???
     config_name: config
@@ -123,8 +125,8 @@ hydra:
         item_sep: ','
         exclude_keys: []
   runtime:
-    version: 1.1.1
-    cwd: C:\Users\zopfk\Documents\Masterarbeit\ddm_stride
+    version: 1.1.2
+    cwd: c:\Users\zopfk\Documents\Masterarbeit\ddm_stride\tutorials
     config_sources:
     - path: hydra.conf
       schema: pkg
@@ -136,7 +138,7 @@ hydra:
       schema: structured
       provider: schema
     choices:
-      algorithm: mnle
+      algorithm: basic_ddm
       task: basic_ddm
       ddm_model: basic_ddm
       hydra/env: default

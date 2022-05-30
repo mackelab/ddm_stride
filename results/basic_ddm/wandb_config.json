@@ -1,0 +1,1 @@
+{"_wandb": {}, "hidden_features": 25, "hidden_layers": 2, "learning_rate": 0.000403413057999576, "num_transforms": 2, "stop_after_epochs": 20, "training_batch_size": 256, "validation_fraction": 0.2}
