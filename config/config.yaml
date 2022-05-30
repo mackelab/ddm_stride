@@ -8,7 +8,7 @@ defaults:
 
 # Organize runs by naming them: The result_folder is used for storing 
 # the results and configuration of your experiment.
-result_folder: basic_ddm_22-05-24
+result_folder: basic_ddm
 
 hydra:
   run:

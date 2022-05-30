@@ -1,6 +1,6 @@
 
 # Choose the number of sweep configurations and the search space of the hyperparameters.
-n_wandb_sweeps: 25
+n_wandb_sweeps: 2
 wandb:
   method: random
   parameters:

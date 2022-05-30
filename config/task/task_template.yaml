@@ -31,12 +31,10 @@ posterior_params:
   thin: 5
   # Warmup steps use thinning if slice_np_vectorized and are performed for each chain!
   warmup_steps: 100   
-  max_width: 20
   num_chains: 5
   init_strategy: 'sir'
   init_strategy_num_candidates: 500
-  num_workers: 10
-
+  num_workers: 1
 # MAP
 num_iter: 1000
 num_to_optimize: 100 
