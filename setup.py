@@ -29,8 +29,6 @@ REQUIRED = [
     'hydra-core',
     'ipykernel',
     'jupyter',
-    'black',
-    'isort',
     'pandas',
     'matplotlib',
     'seaborn',
