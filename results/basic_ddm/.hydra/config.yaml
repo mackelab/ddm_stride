@@ -1,9 +1,9 @@
 result_folder: basic_ddm
-run_simulate: true
+run_simulate: false
 run_train: false
 run_diagnose_fast: false
 run_diagnose_slow: false
-run_evaluate: false
+run_evaluate: true
 ddm_model:
   simulator:
     _target_: ddm_stride.ddm_models.basic_ddm.BasicDDM
@@ -42,7 +42,7 @@ task:
     num_workers: 5
   presim_iid_test_data_path: null
   sim_iid_test_data_params:
-    num_params: 20
+    num_params: 5
     simulation_batch_size: 100
     num_workers: 5
   model_path: null
@@ -51,11 +51,10 @@ task:
     method: slice_np
     thin: 5
     warmup_steps: 100
-    max_width: 20
     num_chains: 5
     init_strategy: proposal
-    init_strategy_num_candidates: 25
-    num_workers: 10
+    init_strategy_num_candidates: 500
+    num_workers: 1
   num_iter: 1000
   num_to_optimize: 100
   num_init_samples: 1000
