@@ -17,7 +17,7 @@ python ddm_stride/run.py
 ```
 or via the tutorials.    
 
-The quickstart tutorial (TODO link) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. They are also made available in Google Colab (TODO: link).  
+The [quickstart tutorial](https://github.com/mackelab/ddm_stride/blob/main/tutorials/quickstart.ipynb) shows one pipeline run and its results. In order to use the pipeline, complete the tutorials one after the other. They are also made available in [Google Colab](https://drive.google.com/drive/folders/1ienzlueWtA38DEyD6ig4bgPlXXGau2QW?usp=sharing).  
 Blue boxes provide additional information for more advanced users and can be skipped. 
 
 </br>

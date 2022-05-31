@@ -26,6 +26,7 @@ VERSION = "0.1.0"
 REQUIRED = [
     'ddm_stride',
     'sbi',
+    'PyYAML>=5.1.0',
     'hydra-core',
     'ipykernel',
     'jupyter',
