@@ -17,7 +17,7 @@ sim_test_data_params:
 # num_params specifies the number of parameter configurations used for diagnose plots. 
 presim_iid_test_data_path:
 sim_iid_test_data_params:
-  num_params: 20                 # recommended: 20
+  num_params: 5                 # recommended: 20
   simulation_batch_size: 100
   num_workers: 5
   
