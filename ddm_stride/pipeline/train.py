@@ -81,11 +81,13 @@ def train(cfg: DictConfig):
                 val_log_prob = inference._summary["best_validation_log_probs"][-1]
                 wandb.log({"validation_log_prob": val_log_prob})
 
-                # Save best model
+                # Save best hyperparameters and model
                 if val_log_prob > best_sweep_info["best_val_log_prob"]:
                     best_sweep_info["best_val_log_prob"] = val_log_prob
-                    best_sweep_info["best_config"] = wandb_config
-                    best_sweep_info["best_model"] = density_estimator.state_dict()
+                    torch.save(density_estimator.state_dict(), "model_state_dict.pt")
+                    wandb_best_config = wandb_config.__dict__["_items"]
+                    with open("wandb_config.json", "w") as f:
+                        json.dump(wandb_best_config, f)
             return
 
         # Use the agent to run the training function with different hyperparameter configurations
@@ -96,10 +98,6 @@ def train(cfg: DictConfig):
             project=str(cfg["result_folder"]).replace("/", "_"),
         )
 
-        # Save the best hyperparameters and model
-        torch.save(best_sweep_info["best_model"], "model_state_dict.pt")
-        wandb_best_config = best_sweep_info["best_config"].__dict__["_items"]
-        with open("wandb_config.json", "w") as f:
-            json.dump(wandb_best_config, f)
+
 
     return
