@@ -33,6 +33,7 @@ def evaluate(cfg: DictConfig) -> None:
     os.makedirs("evaluate", exist_ok=True)
 
     exp_data = load_experimental_data(cfg)
+
     exp_cond_names = get_experimental_condition_names(cfg)
 
     # Range of observations to compute the pdf on
@@ -50,7 +51,6 @@ def evaluate(cfg: DictConfig) -> None:
     plt.rc("font", size=15)
 
     if exp_cond_names and cfg["task"]["group_by"]:
-
         # The posterior is computed and plotted separately for each group
         groupby = (
             list(cfg["task"]["group_by"])
@@ -121,96 +121,103 @@ def evaluate(cfg: DictConfig) -> None:
 
     # Sample posterior, perform posterior predictive check, plot results
     # Group by specified experimental conditions, marginalize the others out
-    if exp_cond_names:
-        if cfg["task"]["group_by"]:
+    if exp_cond_names and cfg["task"]["group_by"]:
 
-            best_thetas["experimental_condition_groups"] = cfg["task"]["group_by"]
+        best_thetas["experimental_condition_groups"] = cfg["task"]["group_by"]
 
-            for idx, (key, group) in enumerate(grouped_data):
+        for idx, (key, group) in enumerate(grouped_data):
 
-                x_o = group.loc[:, get_observation_names(cfg)].values
-                exp_cond = group.loc[:, get_experimental_condition_names(cfg)].values
+            x_o = group.loc[:, get_observation_names(cfg)].values
+            exp_cond = group.loc[:, get_experimental_condition_names(cfg)].values
 
-                posterior = build_posterior(
-                    cfg, torch.FloatTensor(x_o), torch.FloatTensor(exp_cond)
-                )
-                potential_fn = posterior.potential_fn
+            posterior = build_posterior(
+                cfg, torch.FloatTensor(x_o), torch.FloatTensor(exp_cond)
+            )
+            potential_fn = posterior.potential_fn
 
-                post_sample = tensor2numpy(posterior.sample((n_posterior_samples,)))
-                # Compute metrics and log probability
-                best_theta = tensor2numpy(
-                    posterior.map(
-                        num_iter=cfg["task"]["num_iter"],
-                        num_to_optimize=cfg["task"]["num_to_optimize"],
-                        num_init_samples=cfg["task"]["num_init_samples"],
-                        init_method=cfg["task"]["init_method"],
-                    )[0]
-                )
-                potential_prob = posterior.potential(best_theta) / group.shape[0]
-                best_thetas[key] = theta_metrics(
-                    cfg, best_theta, post_sample, potential_prob
-                )
+            print('Compute posterior')
+            post_sample = tensor2numpy(posterior.sample((n_posterior_samples,)))
+            
+            # Compute metrics and log probability
+            print('Compute MAP')
+            best_theta = tensor2numpy(
+                posterior.map(
+                    num_iter=cfg["task"]["num_iter"],
+                    num_to_optimize=cfg["task"]["num_to_optimize"],
+                    num_init_samples=cfg["task"]["num_init_samples"],
+                    init_method=cfg["task"]["init_method"],
+                )[0]
+            )
+            potential_prob = posterior.potential(best_theta) / group.shape[0]
+            best_thetas[key] = theta_metrics(
+                cfg, best_theta, post_sample, potential_prob
+            )
 
-                # Flow likelihood fixed to MAP
-                pdfs = nflow_pdf(
-                    cfg, best_theta, group, potential_fn, x_discr, x_cont_range
-                )
+            # Flow likelihood fixed to MAP
+            pdfs = nflow_pdf(
+                cfg, best_theta, group, potential_fn, x_discr, x_cont_range
+            )
 
-                # Plot posterior samples
-                title = f"conditions: {cfg['task']['group_by']} = {key}"
-                plot_samples(
-                    cfg,
-                    post_sample,
-                    prior_samples=None,
-                    reference_points=[best_theta],
-                    fig=fig2,
-                    grid=outer_grid2[idx],
-                    title=title,
-                )
+            # Plot posterior samples
+            title = f"conditions: {cfg['task']['group_by']} = {key}"
+            plot_samples(
+                cfg,
+                post_sample,
+                prior_samples=None,
+                reference_points=[best_theta],
+                fig=fig2,
+                grid=outer_grid2[idx],
+                title=title,
+            )
 
-                # Plot posterior predictive
-                posterior_predictive(
-                    cfg, post_sample, group, simulator, key, fig3, outer_grid3[idx]
-                )
+            # Plot posterior predictive
+            print('Compute posterior predictive')
+            posterior_predictive(
+                cfg, post_sample, group, simulator, key, fig3, outer_grid3[idx]
+            )
 
-                # If the discrete observations are binary, move data corresponding to one of the discr_obs to negative space for plotting
-                if (
-                    len(get_continuous_observation_names(cfg)) == 1
-                    and x_discr.shape[0] == 2
-                ):
+            # If the discrete observations are binary, move data corresponding to one of the discr_obs to negative space for plotting
+            if (
+                len(get_continuous_observation_names(cfg)) == 1
+                and x_discr.shape[0] == 2
+            ):
+                group.loc[
+                    group[get_discrete_observation_names(cfg).pop()] == x_discr[0],
+                    get_continuous_observation_names(cfg),
+                ] = (
                     group.loc[
-                        group[get_discrete_observation_names(cfg).pop()] == x_discr[0],
+                        group[get_discrete_observation_names(cfg).pop()].values
+                        == x_discr[0],
                         get_continuous_observation_names(cfg),
-                    ] = (
-                        group.loc[
-                            group[get_discrete_observation_names(cfg).pop()].values
-                            == x_discr[0],
-                            get_continuous_observation_names(cfg),
-                        ].values
-                        * -1
-                    )
-
-                # Plot experimental data and pdf
-                plot_pdf(
-                    cfg,
-                    pdfs=pdfs,
-                    x_discr=x_discr,
-                    x_cont_range=x_cont_range,
-                    data=group,
-                    exp_cond=key,
-                    axis=ax1[idx],
+                    ].values
+                    * -1
                 )
+
+            # Plot experimental data and pdf
+            plot_pdf(
+                cfg,
+                pdfs=pdfs,
+                x_discr=x_discr,
+                x_cont_range=x_cont_range,
+                data=group,
+                exp_cond=key,
+                axis=ax1[idx],
+            )
 
     # Marginalize out all experimental conditions
     else:
 
         x_o = exp_data.loc[:, get_observation_names(cfg)].values
+        exp_cond = exp_data.loc[:, get_experimental_condition_names(cfg)].values
 
-        posterior = build_posterior(cfg, torch.FloatTensor(x_o), None)
+        posterior = build_posterior(cfg, torch.FloatTensor(x_o), torch.FloatTensor(exp_cond))
         potential_fn = posterior.potential_fn
 
+        print('Compute posterior')
         post_sample = tensor2numpy(posterior.sample((n_posterior_samples,)))
+        
         # Compute metrics and log probability
+        print('Compute MAP')
         best_theta = tensor2numpy(
             posterior.map(
                 num_iter=cfg["task"]["num_iter"],
@@ -237,6 +244,7 @@ def evaluate(cfg: DictConfig) -> None:
         )
 
         # Plot posterior predictive
+        print('Compute posterior predictive')
         posterior_predictive(
             cfg, post_sample, exp_data, simulator, exp_cond=None, fig=fig3
         )
@@ -272,7 +280,7 @@ def evaluate(cfg: DictConfig) -> None:
     plt.show()
 
     plt.figure(2)
-    fig2.suptitle("Posterior samples", y=1, fontsize=20)
+    fig2.suptitle("Posterior samples", fontsize=20)
     plt.savefig("evaluate/posterior.png")
     plt.show()
 
