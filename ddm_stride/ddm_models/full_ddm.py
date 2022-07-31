@@ -35,7 +35,7 @@ class FullDDM(Simulator):
         super().__init__(inputs, simulator_results)
 
     def generate_data(
-        self, input_dict: Dict(torch.Tensor)
+        self, input_dict: Dict
     ) -> Union[torch.Tensor, np.ndarray]:
         """Use the given input_dict sample to simulate one simulation result.
 
@@ -53,14 +53,15 @@ class FullDDM(Simulator):
         """
         # Sample drift, starting point and non-decision time using mean values and across-trial variability
         # as specified in https://osf.io/xb75f/
-        drift = torch.distributions.normal.Normal(
-            input_dict["drift"], input_dict["atv_drift"]
+        sign = np.random.choice([-1, 1])
+        drift = np.random.normal(
+            sign * input_dict["drift"], input_dict["atv_drift"]
         )
-        relative_starting_point = torch.distributions.uniform.Uniform(
+        relative_starting_point = np.random.uniform(
             low=input_dict["starting_point"] - input_dict["atv_starting_point"] / 2,
             high=input_dict["starting_point"] + input_dict["atv_starting_point"] / 2,
         )
-        non_decision_time = torch.distributions.uniform.Uniform(
+        non_decision_time = np.random.uniform(
             low=input_dict["non_decision_time"]
             - input_dict["atv_non_decision_time"] / 2,
             high=input_dict["non_decision_time"]
@@ -71,7 +72,7 @@ class FullDDM(Simulator):
         rt = 0
         # define time interval and number of intermediate steps
         tmax = 7.0
-        tspan = np.linspace(0.0, tmax, 20001)
+        tspan = np.linspace(0.0, tmax, 1001)
 
         def f(x, t):
             return drift
@@ -90,11 +91,11 @@ class FullDDM(Simulator):
 
         if pass_lower_bound.size > 0 and pass_upper_bound.size > 0:
             if pass_lower_bound[0] < pass_upper_bound[0]:
-                rt, choice = -tspan[pass_lower_bound[0]] + non_decision_time, -1
+                rt, choice = tspan[pass_lower_bound[0]] + non_decision_time, 0
             else:
                 rt, choice = tspan[pass_upper_bound[0]] + non_decision_time, 1
         elif pass_lower_bound.size > 0:
-            rt, choice = -tspan[pass_lower_bound[0]] + non_decision_time, -1
+            rt, choice = tspan[pass_lower_bound[0]] + non_decision_time, 0
         elif pass_upper_bound.size > 0:
             rt, choice = tspan[pass_upper_bound[0]] + non_decision_time, 1
         # if no boundary has been crossed, return nan
