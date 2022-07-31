@@ -113,7 +113,7 @@ def posterior_predictive_check(
     for idx, (key, data) in enumerate(param_groups):
 
         # Draw x and experimental condition from the test data
-        n_obs = min(100, data.shape[0])
+        n_obs = min(250, data.shape[0])
         obs_idx = np.random.choice(data.index, n_obs, replace=False)
         x = data.loc[obs_idx, get_observation_names(cfg)].values
         x = atleast_2d_float32_tensor(x)
@@ -191,7 +191,7 @@ def posterior_predictive_check(
             fig=fig,
             axes=ax1,
         )
-        ax1[0, 0].legend(["simulated samples", "observations"], loc="upper right")
+        ax1[-1, -1].legend(["simulated samples", "observations"], bbox_to_anchor=(0,0), loc="lower right")
 
     plt.rc("font", size=15)
     plt.savefig("diagnose/posterior_predictive.png")

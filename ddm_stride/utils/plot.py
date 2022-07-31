@@ -406,6 +406,6 @@ def plot_samples(
         mid_idx = int((n_subplots - 1) / 2)
         axis[0, mid_idx].set_title(title, fontsize=18)
 
-    axis[0, -1].legend(legend)
+    axis[-1, -1].legend(legend, bbox_to_anchor=(0,0), loc="lower right")
 
     return
